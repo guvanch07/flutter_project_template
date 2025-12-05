@@ -1,13 +1,21 @@
 import 'dart:async';
 
-abstract class Remote ConfigRepository {
+abstract class RemoteConfigRepository {
   Future<void> initialize();
-  
-  /// Stream of configuration updates
+  bool isAutoCaptureEnabled();
+  bool isDisplayPaywallOnAppOpen();
+  String? getAppTutorialUrl();
+  String? getTrophyShareUrl();
+  String? getAppFeedLinkType();
+
+  /// decides whether to show the old onboarding or the new one
+  bool isNewOnboarding();
+
+  bool isAlternativeStorage();
+  bool isEditAvailable();
+  bool isFeedAvailable();
+  bool isProfileAvailable();
+  bool isTrophyAvailable();
+
   Stream<void> get configUpdates;
-  
-  // Add your remote config getters here
-  // Example:
-  // bool isFeatureEnabled();
-  // String getApiUrl();
 }
