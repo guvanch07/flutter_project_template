@@ -2,7 +2,7 @@ name: flutter_project_template
 description: A Flutter project template with Clean Architecture, Bloc, GoRouter, Dio, and GetIt.
 version: 0.1.0+1
 environment:
-  mason: ">=0.1.0-dev.26 <0.1.0"
+  mason: ">=0.1.0-dev.26 <1.0.0"
 vars:
   project_name:
     type: string

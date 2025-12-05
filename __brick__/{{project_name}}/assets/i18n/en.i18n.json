@@ -1,0 +1,48 @@
+{
+  "general": {
+    "actions": {
+      "copied(name)": "{name} copied",
+      "showAll": "Show all",
+      "search": "Search",
+      "loading": "Loading",
+      "tryAgain": "Try again",
+      "notNow": "Not now",
+      "ok": "OK",
+      "continueAction": "Continue",
+      "retry": "Retry",
+      "seeAll": "See all",
+      "apply": "Apply",
+      "collect": "Collect",
+      "refine": "Refine",
+      "showLess": "Show less",
+      "listen": "Listen",
+      "editPhoto": "Edit photo",
+      "save": "Save",
+      "cancel": "Cancel",
+      "share": "Share",
+      "remove": "Remove",
+      "all": "All"
+    },
+    "theme": {
+      "name": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      }
+    },
+    "unknownLabel": "Unknown"
+  },
+  "models": {
+    "rarity": {
+      "values": {
+        "common": "Common",
+        "rare": "Rare",
+        "legendary": "Legendary"
+      }
+    }
+  },
+  "home": {
+    "title": "Home",
+    "counter": "Counter: {value}"
+  }
+}
