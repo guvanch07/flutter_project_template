@@ -53,8 +53,13 @@ dependencies:
   firebase_auth: ^5.5.2
   firebase_analytics: ^11.4.0
   firebase_messaging: ^15.2.5
+  firebase_storage: ^12.3.4
   cloud_firestore: ^5.6.0
   supabase_flutter: ^2.3.2
+  
+  # Storage
+  flutter_secure_storage: ^9.2.4
+  mime: ^2.0.0
   
   # Analytics
   amplitude_flutter: ^4.3.1
