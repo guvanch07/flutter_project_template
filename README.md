@@ -34,7 +34,7 @@ mason init
 You can add this brick directly from the git repository:
 
 ```bash
-mason add flutter_project_template --git-url ssh://git@g.326labs.com:50022/guvanch.amanov/flutter_project_template.git
+mason add flutter_project_template --git-url https://github.com/guvanch07/flutter_project_template.git
 ```
 
 ### Option 2: Local Usage
