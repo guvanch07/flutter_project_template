@@ -30,6 +30,9 @@ dependencies:
   freezed_annotation: ^2.4.1
   equatable: ^2.0.5
   either_dart: ^1.0.0
+  shared_preferences: ^2.2.2
+  app_links: ^3.4.5
+  app_badge_plus: ^1.1.0
   
   # Localization
   slang: ^3.28.0
@@ -45,6 +48,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  bloc_test: ^9.1.5
   
   # Code Generation
   build_runner: ^2.4.6
