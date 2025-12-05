@@ -28,7 +28,7 @@ Future<void> configureDependencies() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerSingleton<SharedPreferences>(sharedPreferences);
 
-  getIt.registerLazySingleton<Dio>(() => Dio());
+  getIt.registerLazySingleton<Dio>(Dio);
   getIt.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
   getIt.registerLazySingleton<FlutterSecureStorage>(
     () => const FlutterSecureStorage(),
@@ -36,9 +36,7 @@ Future<void> configureDependencies() async {
 
   // Services
   getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt<Dio>()));
-  getIt.registerLazySingleton<AnalyticsService>(
-    () => FirebaseAnalyticsProvider(),
-  );
+  getIt.registerLazySingleton<AnalyticsService>(FirebaseAnalyticsProvider);
   getIt.registerLazySingleton<ConnectivityService>(
     () => ConnectivityService.instance,
   );
@@ -49,11 +47,9 @@ Future<void> configureDependencies() async {
       sharedPreferences: getIt<SharedPreferences>(),
     ),
   );
-  getIt.registerLazySingleton<AuthRepository>(
-    () => AuthRepositoryImplFirebase(),
-  );
+  getIt.registerLazySingleton<AuthRepository>(AuthRepositoryImplFirebase);
   getIt.registerLazySingleton<NotificationRepository>(
-    () => NotificationRepositoryImpl(),
+    NotificationRepositoryImpl,
   );
   getIt.registerLazySingleton<StorageRepository>(
     () => StorageRepositoryImpl(storage: getIt<FirebaseStorage>()),
@@ -63,12 +59,19 @@ Future<void> configureDependencies() async {
       secureStorage: getIt<FlutterSecureStorage>(),
     ),
   );
+  getIt.registerLazySingleton<FirebaseRemoteConfig>(
+    () => FirebaseRemoteConfig.instance,
+  );
+  getIt.registerLazySingleton<RemoteConfigRepository>(
+    () =>
+        RemoteConfigRepositoryImpl(remoteConfig: getIt<FirebaseRemoteConfig>()),
+  );
 
   // Cubits - Registered as singletons for app-wide state
   getIt.registerLazySingleton<ThemeCubit>(
     () => ThemeCubit(preferencesRepository: getIt<PreferencesRepository>()),
   );
-  getIt.registerLazySingleton<LogCubit>(() => LogCubit());
+  getIt.registerLazySingleton<LogCubit>(LogCubit);
   getIt.registerLazySingleton<ConnectivityCubit>(
     () => ConnectivityCubit(connectivityService: getIt<ConnectivityService>()),
   );

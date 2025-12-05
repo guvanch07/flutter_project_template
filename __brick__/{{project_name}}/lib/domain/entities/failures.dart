@@ -1,15 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
-// Placeholder for BaseError if it was intended to be used, 
-// otherwise adapting ServerFailure to use generic message for now 
-// or assuming BaseError is defined elsewhere. 
-// For this template, I'll define a simple BaseError to make the code compile.
-class BaseError {
-  final String message;
-  final Map<String, dynamic>? errors;
-  BaseError({required this.message, this.errors});
-}
+import 'entities.dart';
 
 abstract class BaseFailure extends Equatable implements Exception {
   final String message;
@@ -23,9 +15,11 @@ class ServerFailure extends BaseFailure {
   final BaseError responseError;
 
   ServerFailure(this.responseError)
-      : super(responseError.message.isNotEmpty
+    : super(
+        responseError.message.isNotEmpty
             ? responseError.message
-            : '');
+            : responseError.errors?.values.firstOrNull?.message ?? '',
+      );
 }
 
 class RepositoryFailure extends BaseFailure {
@@ -45,17 +39,14 @@ class NotificationFailure extends BaseFailure {
 class DioFailure extends BaseFailure {
   final DioException error;
 
-  DioFailure(
-    this.error,
-  ) : super('DioFailure: ${error.message}');
+  DioFailure(this.error) : super('DioFailure: ${error.message}');
 }
 
 class SignInAccountAlreadyDeletedFailure extends BaseFailure {
   final String userEmail;
 
-  const SignInAccountAlreadyDeletedFailure({
-    required this.userEmail,
-  }) : super('SignInAccountAlreadyDeletedFailure');
+  const SignInAccountAlreadyDeletedFailure({required this.userEmail})
+    : super('SignInAccountAlreadyDeletedFailure');
 }
 
 class SignInUserNotExistFailure extends BaseFailure {
@@ -64,12 +55,12 @@ class SignInUserNotExistFailure extends BaseFailure {
 
 class SignInIncorrectPasswordFailure extends BaseFailure {
   const SignInIncorrectPasswordFailure()
-      : super('SignInIncorrectPasswordFailure');
+    : super('SignInIncorrectPasswordFailure');
 }
 
 class PhotoSearchHistoryFailure extends BaseFailure {
   const PhotoSearchHistoryFailure([String? message])
-      : super(message ?? 'Photo search history failure');
+    : super(message ?? 'Photo search history failure');
 }
 
 class NoInternetConnectionFailure extends BaseFailure {
@@ -82,7 +73,7 @@ class TimeoutFailure extends BaseFailure {
 
 class UnknownFailure extends BaseFailure {
   const UnknownFailure([String? message])
-      : super(message ?? 'Unknown error occurred');
+    : super(message ?? 'Unknown error occurred');
 }
 
 class NoObjectFoundFailure extends BaseFailure {
