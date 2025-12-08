@@ -88,7 +88,7 @@ dependencies:
   firebase_crashlytics: ^4.0.0
   
   # Logging
-  palestine_console: ^2.0.0
+  palestine_console: ^0.0.10
   
   # Smartlook Analytics
   flutter_smartlook: ^4.1.12

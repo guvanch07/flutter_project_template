@@ -5,7 +5,7 @@ import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/internal/styles/colors/{{project_name}}_palette.dart';
 
 // TODO: review all inputDecorationTheme
-class {{project_name|pascalCase}}Theme extends void CustomThemeData {
+class {{project_name|pascalCase}}Theme extends CustomThemeData {
   {{project_name|pascalCase}}Theme({required super.palette, required super.textTheme})
     : super(
         primaryLight: palette.primary.$40,
