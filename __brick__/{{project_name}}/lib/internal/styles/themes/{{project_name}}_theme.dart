@@ -6,7 +6,7 @@ import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/internal/styles/colors/{{project_name}}_palette.dart';
 
 // TODO: review all inputDecorationTheme
-class {{project_name|pascalCase}}Theme extends void CustomThemeData {
+class {{project_name|pascalCase}}Theme extends CustomThemeData {
   {{project_name|pascalCase}}Theme({required super.palette, required super.textTheme})
     : super(
         primaryLight: palette.primary.$40,
@@ -20,7 +20,7 @@ class {{project_name|pascalCase}}Theme extends void CustomThemeData {
       );
 
   factory {{project_name|pascalCase}}Theme.defaultPalette({required CustomTextTheme textTheme}) =>
-      {{project_name|pascalCase}}Theme(palette: const PokemonPalette(), textTheme: textTheme);
+      {{project_name|pascalCase}}Theme(palette: const {{project_name|pascalCase}}Palette(), textTheme: textTheme);
 
   Color get surfaceContainerLight => palette.neutralVariant.$95;
   Color get surfaceContainerLowLight => palette.neutralVariant.$98;

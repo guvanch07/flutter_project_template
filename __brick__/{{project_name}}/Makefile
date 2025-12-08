@@ -6,6 +6,10 @@ init:
 	$(MAKE) generate_models_delete_conflicting
 	$(MAKE) slang
 
+launchinit:
+	$(MAKE) init
+	code .
+
 clean:
 	flutter clean
 
@@ -41,4 +45,4 @@ deploy_ipa:
 	xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey HHVAC4M5KV --apiIssuer 9e086b66-613e-4750-94ca-59bbe7a9b559
 
 
-.PHONY: init clean pub_get generate_models generate_models_delete_conflicting slang build_ipa_prod build_ipa_dev build_appbundle_prod build_appbundle_dev deploy_ipa
+.PHONY: init launchinit clean pub_get generate_models generate_models_delete_conflicting slang build_ipa_prod build_ipa_dev build_appbundle_prod build_appbundle_dev deploy_ipa

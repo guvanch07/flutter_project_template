@@ -137,4 +137,26 @@ class {{project_name|pascalCase}}Palette extends BasePalette {
     5: Color(0xff0E1118),
     0: Color(0xff000000),
   });
+
+  @override
+  CustomColor get success => const CustomColor({
+    100: Color(0xffFFFFFF),
+    99: Color(0xffF5FFFB),
+    98: Color(0xffEDFCF6),
+    95: Color(0xffDEFEF1),
+    90: Color(0xffD0FFE9),
+    80: Color(0xffACEED4),
+    70: Color(0xff76DFBB),
+    60: Color(0xff3EC99E),
+    50: Color(0xff1BAE85),
+    40: Color(0xff109E7A),
+    35: Color(0xff148B70),
+    30: Color(0xff0B715A),
+    25: Color(0xff0C5948),
+    20: Color(0xff0B493D),
+    15: Color(0xff083E34),
+    10: Color(0xff052923),
+    5: Color(0xff03201B),
+    0: Color(0xff000000),
+  });
 }

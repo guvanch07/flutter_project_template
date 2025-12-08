@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
 
-class {{project_name|pascalCase}}TextTheme extends void CustomTextTheme {
+class {{project_name|pascalCase}}TextTheme extends CustomTextTheme {
   const {{project_name|pascalCase}}TextTheme({required super.typeface, required super.fontWeight});
 
   @override
