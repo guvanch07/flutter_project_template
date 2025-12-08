@@ -16,16 +16,17 @@ import 'package:{{project_name}}/domain/repositories/secure_storage_repository.d
 import 'package:{{project_name}}/domain/utils/utils.dart';
 import 'package:{{project_name}}/injection.dart';
 import 'package:{{project_name}}/internal/backup_manager.dart';
+import 'package:{{project_name}}/internal/config/app_constants.dart';
 import 'package:{{project_name}}/presentation/cubits/log/log_cubit.dart';
 
 class AuthRepositoryImplFirebase implements AuthRepository {
   // TODO: Add your backend URLs here
-  static const String _updateCustomerUrl = 'YOUR_UPDATE_CUSTOMER_URL';
-  static const String _getDataByHashUrl = 'YOUR_GET_DATA_BY_HASH_URL';
-  static const String _getTokenByHashUrl = 'YOUR_GET_TOKEN_BY_HASH_URL';
-  static const String _getDataByDeviceIdUrl = 'YOUR_GET_DATA_BY_DEVICE_ID_URL';
+  static const String _updateCustomerUrl = AppConstants.updateCustomerUrl;
+  static const String _getDataByHashUrl = AppConstants.getDataByHashUrl;
+  static const String _getTokenByHashUrl = AppConstants.getTokenByHashUrl;
+  static const String _getDataByDeviceIdUrl = AppConstants.getDataByDeviceIdUrl;
   static const String _getTokenByDeviceIdUrl =
-      'YOUR_GET_TOKEN_BY_DEVICE_ID_URL';
+      AppConstants.getTokenByDeviceIdUrl;
 
   final FirebaseAuth _firebaseAuth;
   final Dio _dio;

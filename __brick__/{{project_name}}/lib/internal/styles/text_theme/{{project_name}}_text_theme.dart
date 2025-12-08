@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
 
-class PokemonTextTheme extends CustomTextTheme {
-  const PokemonTextTheme({required super.typeface, required super.fontWeight});
+class {{project_name|pascalCase}}TextTheme extends void CustomTextTheme {
+  const {{project_name|pascalCase}}TextTheme({required super.typeface, required super.fontWeight});
 
   @override
   TextStyle get displayLarge => TextStyle(

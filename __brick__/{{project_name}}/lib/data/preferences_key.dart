@@ -9,6 +9,8 @@ class PreferencesKey {
     read: _stringToThemeMode,
   );
 
+  static const firebaseAuthHash = DataSourceKey<String>('firebase_auth_hash');
+
   static String _themeModeToString(ThemeMode mode) => mode.name;
 
   static ThemeMode _stringToThemeMode(String value) => ThemeMode.values

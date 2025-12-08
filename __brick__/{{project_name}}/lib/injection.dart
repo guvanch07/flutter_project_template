@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:{{project_name}}/data/remote/api_client.dart';
+import 'package:{{project_name}}/data/remote/network_module.dart';
 import 'package:{{project_name}}/data/repositories/auth_repository_impl_firebase.dart';
 import 'package:{{project_name}}/data/repositories/notification_repository_impl.dart';
 import 'package:{{project_name}}/data/repositories/preferences_repository_impl.dart';
@@ -16,6 +18,8 @@ import 'package:{{project_name}}/domain/repositories/secure_storage_repository.d
 import 'package:{{project_name}}/domain/repositories/storage_repository.dart';
 import 'package:{{project_name}}/internal/analytics/providers/firebase.dart';
 import 'package:{{project_name}}/internal/analytics/service.dart';
+import 'package:{{project_name}}/internal/config/app_constants.dart';
+import 'package:{{project_name}}/presentation/blocs/blocs.dart';
 import 'package:{{project_name}}/presentation/cubits/connectivity/connectivity_cubit.dart';
 import 'package:{{project_name}}/presentation/cubits/log/log_cubit.dart';
 import 'package:{{project_name}}/presentation/cubits/theme/theme_cubit.dart';
@@ -28,7 +32,8 @@ Future<void> configureDependencies() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerSingleton<SharedPreferences>(sharedPreferences);
 
-  getIt.registerLazySingleton<Dio>(Dio);
+  getIt.registerLazySingleton<Dio>(NetworkModule.provideDio);
+
   getIt.registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance);
   getIt.registerLazySingleton<FlutterSecureStorage>(
     () => const FlutterSecureStorage(),
@@ -36,9 +41,36 @@ Future<void> configureDependencies() async {
 
   // Services
   getIt.registerLazySingleton<ApiClient>(() => ApiClient(getIt<Dio>()));
-  getIt.registerLazySingleton<AnalyticsService>(FirebaseAnalyticsProvider);
+
+  await initFirebaseAnalytics(
+    appEnv: AppConstants.env,
+    locator: GetIt.instance,
+  );
+
+  getIt.registerLazySingleton<AnalyticsService>(
+    () => AnalyticsServiceImpl(
+      appEnv: AppConstants.env,
+      firebaseAnalytics: getIt.isRegistered<FirebaseAnalytics>()
+          ? getIt<FirebaseAnalytics>()
+          : null,
+      amplitude: null,
+      smartlook: null,
+      appsflyer: null,
+    ),
+  );
+
   getIt.registerLazySingleton<ConnectivityService>(
     () => ConnectivityService.instance,
+  );
+
+  // Cubits
+  getIt.registerLazySingleton<AnalyticsLoggerCubit>(AnalyticsLoggerCubit);
+  getIt.registerLazySingleton<ThemeCubit>(
+    () => ThemeCubit(preferencesRepository: getIt<PreferencesRepository>()),
+  );
+  getIt.registerLazySingleton<LogCubit>(LogCubit);
+  getIt.registerLazySingleton<ConnectivityCubit>(
+    () => ConnectivityCubit(connectivityService: getIt<ConnectivityService>()),
   );
 
   // Repositories
@@ -66,16 +98,4 @@ Future<void> configureDependencies() async {
     () =>
         RemoteConfigRepositoryImpl(remoteConfig: getIt<FirebaseRemoteConfig>()),
   );
-
-  // Cubits - Registered as singletons for app-wide state
-  getIt.registerLazySingleton<ThemeCubit>(
-    () => ThemeCubit(preferencesRepository: getIt<PreferencesRepository>()),
-  );
-  getIt.registerLazySingleton<LogCubit>(LogCubit);
-  getIt.registerLazySingleton<ConnectivityCubit>(
-    () => ConnectivityCubit(connectivityService: getIt<ConnectivityService>()),
-  );
-
-  // Feature-specific cubits can be registered as factories
-  // getIt.registerFactory(() => HomeCubit());
 }

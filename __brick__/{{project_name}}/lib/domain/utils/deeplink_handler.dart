@@ -1,10 +1,5 @@
-// ignore_for_file: avoid_classes_with_only_static_members
-
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
-import 'package:{{project_name}}/domain/entities/entities.dart';
-import 'package:superwallkit_flutter/superwallkit_flutter.dart';
+import 'package:{{project_name}}/internal/config/app_constants.dart';
 
 class DeeplinkHandler {
   static void fromString(String value) {
@@ -16,7 +11,8 @@ class DeeplinkHandler {
 
   static void fromUri(Uri uri) {
     if (uri.scheme == AppConstants.deeplinkScheme && !kIsWeb) {
-      unawaited(Superwall.shared.handleDeepLink(uri));
+      // TODO: Handle deep link
+      debugPrint('Deep link received: $uri');
     }
   }
 }

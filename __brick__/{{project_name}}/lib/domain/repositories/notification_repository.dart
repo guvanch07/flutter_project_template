@@ -1,5 +1,5 @@
 import 'package:either_dart/either.dart';
-import 'package:{{project_name}}/domain/entities/failures.dart';
+import 'package:{{project_name}}/domain/entities/entities.dart';
 
 abstract class NotificationRepository {
   /// Initialize notifications system

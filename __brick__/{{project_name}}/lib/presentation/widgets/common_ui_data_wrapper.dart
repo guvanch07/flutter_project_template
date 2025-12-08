@@ -20,8 +20,8 @@ class _CommonUiDataWrapperState extends State<CommonUiDataWrapper> {
   CommonUiData get defaultData =>
       widget.defaultData ??
       CommonUiData(
-        theme: PokemonTheme.defaultPalette(
-          textTheme: PokemonTextTheme(
+        theme: {{project_name|pascalCase}}Theme.defaultPalette(
+          textTheme: {{project_name|pascalCase}}TextTheme(
             typeface: const CustomTypeface(
               brand: 'SF Pro Display',
               plain: 'SF Compact Text',

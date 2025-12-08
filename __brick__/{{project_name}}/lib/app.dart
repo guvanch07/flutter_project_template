@@ -7,6 +7,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:slang_flutter/slang_flutter.dart'; // Add this
 import 'package:{{project_name}}/domain/repositories/auth_repository.dart';
 import 'package:{{project_name}}/domain/repositories/preferences_repository.dart'; // Add this
+import 'package:{{project_name}}/domain/utils/deeplink_handler.dart';
 import 'package:{{project_name}}/i18n/strings.g.dart'; // Add this (Generated slang file)
 import 'package:{{project_name}}/injection.dart';
 import 'package:{{project_name}}/presentation/cubits/auth/auth_cubit.dart';
@@ -43,7 +44,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     AppLinks().uriLinkStream.listen(
       (Uri? uri) {
         if (uri != null) {
-          // DeeplinkHandler.fromUri(uri); // TODO: Implement DeeplinkHandler
+          DeeplinkHandler.fromUri(uri);
         }
       },
       onError: (err) {
@@ -56,7 +57,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   Future<void> _handleInitialDeepLink() async {
     final uri = await AppLinks().getInitialLink();
     if (uri != null) {
-      // DeeplinkHandler.fromUri(uri); // TODO: Implement DeeplinkHandler
+      DeeplinkHandler.fromUri(uri);
     }
   }
 

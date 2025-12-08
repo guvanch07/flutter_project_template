@@ -3,8 +3,8 @@ import 'package:{{project_name}}/domain/entities/entities.dart';
 
 import 'base_palette.dart';
 
-class PokemonPalette extends BasePalette {
-  const PokemonPalette();
+class {{project_name|pascalCase}}Palette extends BasePalette {
+  const {{project_name|pascalCase}}Palette();
 
   @override
   CustomColor get primary => const CustomColor({
