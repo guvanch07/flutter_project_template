@@ -5,13 +5,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import 'package:{{project_name}}/data/preferences_key.dart';
-import 'package:{{project_name}}/domain/domain.dart';
+import 'package:{{project_name}}/domain/domain.dart' as domain;
 import 'package:{{project_name}}/injection.dart';
-import 'package:{{project_name}}/internal/internal.dart';
+import 'package:{{project_name}}/internal/internal.dart' hide AppBackupManager;
 import 'package:{{project_name}}/presentation/cubits/cubits.dart';
 
 class AuthRepositoryImplFirebase implements AuthRepository {
@@ -39,6 +39,34 @@ class AuthRepositoryImplFirebase implements AuthRepository {
       FirebaseFirestore.instance.collection('auth_tokens');
   CollectionReference get _authDeviceIdCollection =>
       FirebaseFirestore.instance.collection('auth_device_ids');
+
+  @override
+  bool get isSignedIn => _firebaseAuth.currentUser != null;
+
+  @override
+  Future<Either<BaseFailure, firebase_auth.User>> signIn({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      if (userCredential.user == null) {
+        return const Left(
+          RepositoryFailure('Sign in failed - no user returned', null),
+        );
+      }
+
+      return Right(userCredential.user!);
+    } on FirebaseAuthException catch (e) {
+      return Left(_handleFirebaseAuthException(e, email: email));
+    } catch (e) {
+      return Left(RepositoryFailure(e.toString(), e));
+    }
+  }
 
   @override
   Future<Either<BaseFailure, String>> linkEmailToAnonymousAccount({
@@ -86,7 +114,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
   @override
   Future<Either<BaseFailure, firebase_auth.User>> getCurrentUser() async {
     try {
-      User? currentUser;
+      firebase_auth.User? currentUser;
       try {
         currentUser = await _firebaseAuth
             .authStateChanges()
@@ -119,7 +147,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
             );
           } else {
             await _prefs.write(PreferencesKey.firebaseAuthHash, hashedUid);
-            unawaited(AppBackupManager.dataChanged());
+            unawaited(domain.AppBackupManager.dataChanged());
           }
           _log('creating firebaseAuthHash record for new firebase user');
           await _saveAuthHashToCollection(hashedUid, currentUser.uid);
@@ -185,7 +213,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
             );
           } else {
             await _prefs.write(PreferencesKey.firebaseAuthHash, hashedUid);
-            unawaited(AppBackupManager.dataChanged());
+            unawaited(domain.AppBackupManager.dataChanged());
           }
           _log('creating firebaseAuthHash record for new firebase user');
           await _saveAuthHashToCollection(hashedUid, currentUser.uid);

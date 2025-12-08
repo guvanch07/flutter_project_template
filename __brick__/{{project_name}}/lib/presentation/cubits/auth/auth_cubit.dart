@@ -13,7 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> checkAuthStatus() async {
     try {
-      final isSignedIn = await _authRepository.isSignedIn;
+      final isSignedIn = _authRepository.isSignedIn;
       if (isSignedIn) {
         emit(AuthAuthenticated());
       } else {
@@ -25,12 +25,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> signIn(String email, String password) async {
-    try {
-      await _authRepository.signIn(email, password);
-      emit(AuthAuthenticated());
-    } catch (_) {
-      emit(AuthUnauthenticated());
-    }
+    final result = await _authRepository.signIn(
+      email: email,
+      password: password,
+    );
+    result.fold(
+      (failure) => emit(AuthUnauthenticated()),
+      (user) => emit(AuthAuthenticated()),
+    );
   }
 
   Future<void> signOut() async {

@@ -6,6 +6,7 @@ import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:get_it/get_it.dart';
 import 'package:palestine_console/palestine_console.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
+import 'package:{{project_name}}/internal/config/config.dart';
 
 Future<void> smartlookInit({
   required String apiKey,

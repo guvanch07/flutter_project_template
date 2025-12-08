@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/injection.dart' as di;
-import 'package:{{project_name}}/internal/styles/styles.dart';
+import 'package:{{project_name}}/internal/styles/styles.dart' as styles;
 
 class CommonUiDataWrapper extends StatefulWidget {
   final CommonUiData? defaultData;
@@ -19,8 +19,8 @@ class _CommonUiDataWrapperState extends State<CommonUiDataWrapper> {
   CommonUiData get defaultData =>
       widget.defaultData ??
       CommonUiData(
-        theme: {{project_name|pascalCase}}Theme.defaultPalette(
-          textTheme: {{project_name|pascalCase}}TextTheme(
+        theme: styles.{{project_name|pascalCase}}Theme.defaultPalette(
+          textTheme: styles.{{project_name|pascalCase}}TextTheme(
             typeface: const CustomTypeface(
               brand: 'SF Pro Display',
               plain: 'SF Compact Text',

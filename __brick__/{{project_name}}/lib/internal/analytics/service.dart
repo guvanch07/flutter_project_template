@@ -13,6 +13,7 @@ import 'package:universal_html/js.dart' as js;
 import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/injection.dart' as di;
 import 'package:{{project_name}}/internal/analytics/custom_firebase_analytics_observer.dart';
+import 'package:{{project_name}}/internal/config/config.dart';
 import 'package:{{project_name}}/presentation/blocs/blocs.dart';
 
 part 'events.dart';

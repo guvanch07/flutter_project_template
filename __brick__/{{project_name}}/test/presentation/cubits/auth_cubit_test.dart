@@ -1,24 +1,51 @@
 import 'package:bloc_test/bloc_test.dart';
+import 'package:either_dart/either.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/domain/repositories/auth_repository.dart';
 import 'package:{{project_name}}/presentation/cubits/auth/auth_cubit.dart';
+
+class FakeUser extends Fake implements firebase_auth.User {
+  @override
+  String get uid => 'test_uid';
+}
 
 class MockAuthRepository implements AuthRepository {
   bool _isSignedIn = false;
 
   @override
-  Future<bool> get isSignedIn async => _isSignedIn;
+  bool get isSignedIn => _isSignedIn;
 
   @override
-  Future<void> signIn(String email, String password) async {
-    if (email == 'error') throw Exception('Sign in failed');
+  Future<Either<BaseFailure, firebase_auth.User>> signIn({
+    required String email,
+    required String password,
+  }) async {
+    if (email == 'error') return Left(UnknownFailure('Sign in failed'));
     _isSignedIn = true;
+    return Right(FakeUser());
   }
 
   @override
-  Future<void> signOut() async {
+  Future<Either<BaseFailure, void>> signOut() async {
     _isSignedIn = false;
+    return const Right(null);
   }
+
+  @override
+  Future<Either<BaseFailure, firebase_auth.User>> getCurrentUser() async {
+    if (_isSignedIn) {
+      return Right(FakeUser());
+    }
+    return Left(UnknownFailure('No user'));
+  }
+
+  @override
+  Future<Either<BaseFailure, String>> linkEmailToAnonymousAccount({
+    required String email,
+    required String password,
+  }) async => const Right('test_uid');
 
   void setSignedIn(bool value) {
     _isSignedIn = value;

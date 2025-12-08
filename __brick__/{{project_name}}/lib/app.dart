@@ -53,7 +53,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   /// call on initState func only if app doesn't have auth
   Future<void> _handleInitialDeepLink() async {
-    final uri = await AppLinks().getInitialLink();
+    final uri = await AppLinks().getInitialLink;
     if (uri != null) {
       DeeplinkHandler.fromUri(uri);
     }

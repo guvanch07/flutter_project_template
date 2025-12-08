@@ -22,8 +22,10 @@ class CommonActions {
     } else {
       return inappwebview.InAppBrowser()
           .openUrlRequest(
-              urlRequest: inappwebview.URLRequest(
-                  url: inappwebview.WebUri.uri(Uri.parse(uri))))
+            urlRequest: inappwebview.URLRequest(
+              url: inappwebview.WebUri.uri(Uri.parse(uri)),
+            ),
+          )
           .onError((error, stackTrace) {});
     }
   }
@@ -38,13 +40,21 @@ class CommonActions {
     Rect? sharePositionOrigin,
     // pass the file path to share the file
     String? filePath,
-  }) =>
-      SharePlus.instance.share(
-        ShareParams(
-          text: text,
-          subject: subject,
-          files: filePath != null ? [XFile(filePath)] : null,
-          sharePositionOrigin: sharePositionOrigin,
-        ),
+  }) async {
+    if (filePath != null) {
+      final file = XFile(filePath);
+      await Share.shareXFiles(
+        [file],
+        text: text,
+        subject: subject,
+        sharePositionOrigin: sharePositionOrigin,
       );
+    } else {
+      await Share.share(
+        text,
+        subject: subject,
+        sharePositionOrigin: sharePositionOrigin,
+      );
+    }
+  }
 }

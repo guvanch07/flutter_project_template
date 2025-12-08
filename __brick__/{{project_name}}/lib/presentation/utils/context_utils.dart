@@ -23,6 +23,7 @@ extension ContextEx on BuildContext {
     return shortestSide > 600;
   }
 
+  /*
   // subscription
   bool get hasSubscriptionRead => read<SubscriptionCubit>().state.maybeWhen(
     subscribed: () => true,
@@ -43,4 +44,5 @@ extension ContextEx on BuildContext {
   // mixed
   bool get hasSubscriptionOrGemsRead => hasSubscriptionRead || hasGemsRead;
   bool get hasSubscriptionOrGemsWatch => hasSubscriptionWatch || hasGemsWatch;
+  */
 }

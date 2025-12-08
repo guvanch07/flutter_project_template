@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:{{project_name}}/data/data.dart';
+import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/domain/repositories/repositories.dart';
 import 'package:{{project_name}}/internal/analytics/analytics.dart';
 import 'package:{{project_name}}/internal/config/config.dart';
@@ -86,4 +87,12 @@ Future<void> configureDependencies() async {
     () =>
         RemoteConfigRepositoryImpl(remoteConfig: getIt<FirebaseRemoteConfig>()),
   );
+
+void initUiData({required CommonUiData data}) {
+  if (!getIt.isRegistered<CommonUiData>()) {
+    getIt.registerSingleton<CommonUiData>(data);
+  } else if (getIt<CommonUiData>() != data) {
+    getIt.unregister<CommonUiData>();
+    getIt.registerSingleton<CommonUiData>(data);
+  }
 }
