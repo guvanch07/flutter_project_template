@@ -4,15 +4,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:slang_flutter/slang_flutter.dart'; // Add this
-import 'package:{{project_name}}/domain/repositories/auth_repository.dart';
-import 'package:{{project_name}}/domain/repositories/preferences_repository.dart'; // Add this
-import 'package:{{project_name}}/domain/utils/deeplink_handler.dart';
-import 'package:{{project_name}}/i18n/strings.g.dart'; // Add this (Generated slang file)
+import 'package:slang_flutter/slang_flutter.dart';
+import 'package:{{project_name}}/domain/repositories/repositories.dart';
+import 'package:{{project_name}}/domain/utils/utils.dart';
+import 'package:{{project_name}}/i18n/strings.g.dart';
 import 'package:{{project_name}}/injection.dart';
-import 'package:{{project_name}}/presentation/cubits/auth/auth_cubit.dart';
-import 'package:{{project_name}}/presentation/cubits/theme/theme_cubit.dart'; // Add this
-import 'package:{{project_name}}/presentation/route/app_routes.dart';
+import 'package:{{project_name}}/presentation/cubits/cubits.dart';
+import 'package:{{project_name}}/presentation/route/route.dart';
 
 class App extends StatefulWidget {
   const App({super.key});

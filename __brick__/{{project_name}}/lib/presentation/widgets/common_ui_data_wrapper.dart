@@ -3,8 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/injection.dart' as di;
-import 'package:{{project_name}}/internal/styles/text_theme/{{project_name}}_text_theme.dart';
-import 'package:{{project_name}}/internal/styles/themes/{{project_name}}_theme.dart';
+import 'package:{{project_name}}/internal/styles/styles.dart';
 
 class CommonUiDataWrapper extends StatefulWidget {
   final CommonUiData? defaultData;

@@ -1,12 +1,11 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
 import 'package:flutter/material.dart';
-import 'package:ios_willpop_transition_theme/ios_willpop_transition_theme.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/internal/styles/colors/{{project_name}}_palette.dart';
 
 // TODO: review all inputDecorationTheme
-class {{project_name|pascalCase}}Theme extends CustomThemeData {
+class {{project_name|pascalCase}}Theme extends void CustomThemeData {
   {{project_name|pascalCase}}Theme({required super.palette, required super.textTheme})
     : super(
         primaryLight: palette.primary.$40,
@@ -160,7 +159,7 @@ class {{project_name|pascalCase}}Theme extends CustomThemeData {
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
-        TargetPlatform.iOS: IOSWillPopTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
       },
     ),
   );
@@ -301,7 +300,7 @@ class {{project_name|pascalCase}}Theme extends CustomThemeData {
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
-        TargetPlatform.iOS: IOSWillPopTransitionsBuilder(),
+        TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
       },
     ),
   );

@@ -9,15 +9,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import 'package:{{project_name}}/data/preferences_key.dart';
-import 'package:{{project_name}}/domain/entities/entities.dart';
-import 'package:{{project_name}}/domain/repositories/auth_repository.dart';
-import 'package:{{project_name}}/domain/repositories/preferences_repository.dart';
-import 'package:{{project_name}}/domain/repositories/secure_storage_repository.dart';
-import 'package:{{project_name}}/domain/utils/utils.dart';
+import 'package:{{project_name}}/domain/domain.dart';
 import 'package:{{project_name}}/injection.dart';
-import 'package:{{project_name}}/internal/backup_manager.dart';
-import 'package:{{project_name}}/internal/config/app_constants.dart';
-import 'package:{{project_name}}/presentation/cubits/log/log_cubit.dart';
+import 'package:{{project_name}}/internal/internal.dart';
+import 'package:{{project_name}}/presentation/cubits/cubits.dart';
 
 class AuthRepositoryImplFirebase implements AuthRepository {
   // TODO: Add your backend URLs here
