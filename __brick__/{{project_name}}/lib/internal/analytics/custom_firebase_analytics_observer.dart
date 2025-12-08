@@ -1,8 +1,9 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:{{project_name}}/domain/entities/entities.dart';
-import 'package:{{project_name}}/injection.dart' as di;
+import 'package:{{project_name}}/injection.dart';
+import 'package:{{project_name}}/internal/config/app_constants.dart';
+import 'package:{{project_name}}/internal/config/app_env.dart';
 import 'package:{{project_name}}/presentation/blocs/blocs.dart';
 
 class CustomFirebaseAnalyticsObserver
@@ -18,28 +19,27 @@ class CustomFirebaseAnalyticsObserver
   final void Function(PlatformException error)? _onError;
 
   AnalyticsLoggerCubit get _analyticsLoggerCubit =>
-      di.locator<AnalyticsLoggerCubit>();
+      getIt<AnalyticsLoggerCubit>();
 
   void _sendScreenView(Route<dynamic> route) {
     final screenName = nameExtractor(route.settings);
-    if (screenName != null && di.locator.isRegistered<FirebaseAnalytics>()) {
+    if (screenName != null && getIt.isRegistered<FirebaseAnalytics>()) {
       if (AppConstants.env == AppEnv.dev) {
         _analyticsLoggerCubit.addItem(
-          AnalyticsLogItem.routeObserver(
+          AnalyticsLogItem.logScreenView(
             date: DateTime.now(),
             name: screenName,
           ),
         );
       }
-      di
-          .locator<FirebaseAnalytics>()
+      getIt<FirebaseAnalytics>()
           .logScreenView(screenName: screenName)
           .catchError((Object error) {
-            final _onError = this._onError;
-            if (_onError == null) {
+            final onError = _onError;
+            if (onError == null) {
               debugPrint('$FirebaseAnalyticsObserver: $error');
             } else {
-              _onError(error as PlatformException);
+              onError(error as PlatformException);
             }
           }, test: (Object error) => error is PlatformException);
     }

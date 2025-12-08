@@ -64,6 +64,19 @@ dependencies:
   
   # Analytics
   amplitude_flutter: ^4.3.1
+  appsflyer_sdk: ^6.14.3
+  
+  # Additional Utils
+  dartx: ^1.2.0
+  android_id: ^0.4.0
+  crypto: ^3.0.3
+  
+  # Permissions & Tracking
+  permission_handler: ^11.3.0
+  app_tracking_transparency: ^2.0.4
+  
+  # Firebase Crashlytics
+  firebase_crashlytics: ^4.0.0
 
 dev_dependencies:
   flutter_test:

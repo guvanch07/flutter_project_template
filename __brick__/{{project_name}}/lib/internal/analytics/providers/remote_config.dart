@@ -1,13 +1,13 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:palestine_console/palestine_console.dart';
-import 'package:{{project_name}}/data/repositories/repositories.dart';
-import 'package:{{project_name}}/domain/repositories/repositories.dart';
+import 'package:{{project_name}}/data/repositories/remote_config_repository_impl.dart';
+import 'package:{{project_name}}/domain/repositories/remote_config_repository.dart';
 
 Future<void> initRemoteConfig({required GetIt locator}) async {
   // Check if already registered
   if (locator.isRegistered<RemoteConfigRepository>()) {
-    Print.red('already initialized', name: 'RemoteConfigRepository');
+    debugPrint('[RemoteConfigRepository] already initialized');
     return;
   }
 
@@ -16,11 +16,10 @@ Future<void> initRemoteConfig({required GetIt locator}) async {
   try {
     remoteConfig = FirebaseRemoteConfig.instance;
     locator.registerSingleton<FirebaseRemoteConfig>(remoteConfig);
-    Print.green('Firebase Remote Config registered', name: 'Remote Config');
+    debugPrint('[Remote Config] Firebase Remote Config registered');
   } catch (e) {
-    Print.red(
-      'Failed to initialize Firebase Remote Config: $e',
-      name: 'Remote Config',
+    debugPrint(
+      '[Remote Config] Failed to initialize Firebase Remote Config: $e',
     );
     remoteConfig = null;
   }
@@ -33,11 +32,10 @@ Future<void> initRemoteConfig({required GetIt locator}) async {
   // Try to initialize the repository
   try {
     await locator<RemoteConfigRepository>().initialize();
-    Print.green(
-      'Repository initialized with update subscription',
-      name: 'Remote Config',
+    debugPrint(
+      '[Remote Config] Repository initialized with update subscription',
     );
   } catch (e) {
-    Print.red('Failed to initialize repository: $e', name: 'Remote Config');
+    debugPrint('[Remote Config] Failed to initialize repository: $e');
   }
 }

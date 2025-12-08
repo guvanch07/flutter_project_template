@@ -10,6 +10,9 @@ class ConnectivityService {
   factory ConnectivityService() => _instance;
   ConnectivityService._internal();
 
+  /// Static instance getter for compatibility
+  static ConnectivityService get instance => _instance;
+
   final Connectivity _connectivity = Connectivity();
   StreamSubscription<List<ConnectivityResult>>? _subscription;
   final StreamController<bool> _connectivityController =
@@ -27,20 +30,20 @@ class ConnectivityService {
     unawaited(_checkConnectivity());
 
     // Listen for connectivity changes
-    _subscription = _connectivity.onConnectivityChanged.listen(
-      (List<ConnectivityResult> results) async {
-        final wasConnected = _isConnected;
-        _isConnected =
-            results.isNotEmpty && results.first != ConnectivityResult.none;
+    _subscription = _connectivity.onConnectivityChanged.listen((
+      List<ConnectivityResult> results,
+    ) async {
+      final wasConnected = _isConnected;
+      _isConnected =
+          results.isNotEmpty && results.first != ConnectivityResult.none;
 
-        if (wasConnected != _isConnected) {
-          _connectivityController.add(_isConnected);
-          if (kDebugMode) {
-            print('Connectivity changed: $_isConnected');
-          }
+      if (wasConnected != _isConnected) {
+        _connectivityController.add(_isConnected);
+        if (kDebugMode) {
+          print('Connectivity changed: $_isConnected');
         }
-      },
-    );
+      }
+    });
   }
 
   /// Check current connectivity status
@@ -79,8 +82,9 @@ class ConnectivityService {
   /// Verify actual internet access by attempting to connect to a reliable host
   Future<bool> _hasInternetAccess() async {
     try {
-      final result = await InternetAddress.lookup('google.com')
-          .timeout(const Duration(seconds: 5));
+      final result = await InternetAddress.lookup(
+        'google.com',
+      ).timeout(const Duration(seconds: 5));
       return result.isNotEmpty && result[0].rawAddress.isNotEmpty;
     } on SocketException catch (_) {
       return false;
@@ -95,8 +99,9 @@ class ConnectivityService {
   }
 
   /// Wait for internet connection with timeout
-  Future<bool> waitForConnection(
-      {Duration timeout = const Duration(seconds: 30)}) async {
+  Future<bool> waitForConnection({
+    Duration timeout = const Duration(seconds: 30),
+  }) async {
     if (_isConnected) return true;
 
     final completer = Completer<bool>();

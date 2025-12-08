@@ -1,7 +1,7 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:palestine_console/palestine_console.dart';
-import 'package:{{project_name}}/domain/entities/entities.dart';
+import 'package:{{project_name}}/internal/config/app_env.dart';
 
 Future<void> initFirebaseAnalytics({
   required AppEnv appEnv,
@@ -9,21 +9,19 @@ Future<void> initFirebaseAnalytics({
 }) async {
   // Check if already registered
   if (locator.isRegistered<FirebaseAnalytics>()) {
-    Print.red('already initialized', name: 'Firebase analytics');
+    debugPrint('[Firebase analytics] already initialized');
     return;
   }
 
   try {
-    final _firebaseAnalytics = FirebaseAnalytics.instance;
-    await _firebaseAnalytics.setUserProperty(
+    final firebaseAnalytics = FirebaseAnalytics.instance;
+    await firebaseAnalytics.setUserProperty(
       name: 'app_env',
       value: appEnv.name,
     );
-    locator.registerSingleton<FirebaseAnalytics>(_firebaseAnalytics);
-    Print.red('initialized', name: 'Firebase analytics');
+    locator.registerSingleton<FirebaseAnalytics>(firebaseAnalytics);
+    debugPrint('[Firebase analytics] initialized');
   } catch (e) {
-    Print.red('$e', name: 'Firebase');
-    // TODO: add Sentry
-    // unawaited(Sentry.captureMessage('Firebase init error: $e'));
+    debugPrint('[Firebase] $e');
   }
 }

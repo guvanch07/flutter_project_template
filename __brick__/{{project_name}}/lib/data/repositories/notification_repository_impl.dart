@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -15,16 +14,27 @@ class NotificationRepositoryImpl implements NotificationRepository {
   bool _isFcmTokenListenerInitialized = false;
 
   @override
-  Future<Either<BaseFailure, void>> requestPermission() async {
+  Future<Either<BaseFailure, bool>> initializeNotifications() async {
+    try {
+      // Initialize Firebase Messaging
+      await FirebaseMessaging.instance.setAutoInitEnabled(true);
+      return const Right(true);
+    } catch (e) {
+      return Left(
+        NotificationFailure('Failed to initialize notifications: $e'),
+      );
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, bool>> requestNotificationPermission() async {
     try {
       final settings = await FirebaseMessaging.instance.requestPermission();
       if (settings.authorizationStatus == AuthorizationStatus.authorized ||
           settings.authorizationStatus == AuthorizationStatus.provisional) {
-        return const Right(null);
+        return const Right(true);
       } else {
-        return const Left(
-          NotificationFailure('Notification permission denied'),
-        );
+        return const Right(false);
       }
     } catch (e) {
       return Left(NotificationFailure(e.toString()));
@@ -32,9 +42,32 @@ class NotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<Either<BaseFailure, String?>> getFcmToken() async {
+  Future<Either<BaseFailure, bool>> subscribeToTopic(String topic) async {
+    try {
+      await FirebaseMessaging.instance.subscribeToTopic(topic);
+      return const Right(true);
+    } catch (e) {
+      return Left(NotificationFailure('Failed to subscribe to topic: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, bool>> unsubscribeFromTopic(String topic) async {
+    try {
+      await FirebaseMessaging.instance.unsubscribeFromTopic(topic);
+      return const Right(true);
+    } catch (e) {
+      return Left(NotificationFailure('Failed to unsubscribe from topic: $e'));
+    }
+  }
+
+  @override
+  Future<Either<BaseFailure, String>> getToken() async {
     try {
       final token = await FirebaseMessaging.instance.getToken();
+      if (token == null) {
+        return const Left(NotificationFailure('Failed to get FCM token'));
+      }
       return Right(token);
     } catch (e) {
       return Left(NotificationFailure(e.toString()));
@@ -42,17 +75,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
   }
 
   @override
-  Future<Either<BaseFailure, void>> deleteFcmToken() async {
-    try {
-      await FirebaseMessaging.instance.deleteToken();
-      return const Right(null);
-    } catch (e) {
-      return Left(NotificationFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<BaseFailure, void>> updateCurrentFcmToken() async {
+  Future<Either<BaseFailure, bool>> updateCurrentFcmToken() async {
     try {
       final token = await FirebaseMessaging.instance.getToken();
       if (token != null) {
@@ -61,7 +84,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
           await _saveTokenToFirestore(user.uid, token);
         }
       }
-      return const Right(null);
+      return const Right(true);
     } catch (e) {
       return Left(NotificationFailure('Failed to update FCM token: $e'));
     }
@@ -104,10 +127,26 @@ class NotificationRepositoryImpl implements NotificationRepository {
     }
   }
 
-  /// Reset FCM token listener initialization flag
   @override
   void resetFcmTokenListener() {
     _isFcmTokenListenerInitialized = false;
+  }
+
+  @override
+  void configureForegroundNotificationHandling() {
+    FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+
+  @override
+  void handleNotificationTap(String? payload) {
+    if (payload != null) {
+      debugPrint('Notification tapped with payload: $payload');
+      // Handle notification navigation logic here
+    }
   }
 
   /// Save FCM token to Firestore subcollection under user
@@ -125,23 +164,20 @@ class NotificationRepositoryImpl implements NotificationRepository {
           });
     } catch (e) {
       try {
-        // Safe check for Crashlytics since it might optional
+        // Safe check for Crashlytics since it might be optional
         if (FirebaseCrashlytics.instance.isCrashlyticsCollectionEnabled) {
           unawaited(
             FirebaseCrashlytics.instance.recordError(e, StackTrace.current),
           );
         }
-      } catch (e) {}
+      } catch (_) {}
     }
   }
 }
 
 // This function must be declared outside of any class
 @pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // Need to initialize Firebase here because background handler runs in isolated context
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   debugPrint('Handling a background message: ${message.messageId}');
   debugPrint('Message data: ${message.data}');
   debugPrint('Message notification: ${message.notification?.title}');

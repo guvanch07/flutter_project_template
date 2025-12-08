@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
@@ -9,11 +10,13 @@ import 'package:{{project_name}}/data/remote/network_module.dart';
 import 'package:{{project_name}}/data/repositories/auth_repository_impl_firebase.dart';
 import 'package:{{project_name}}/data/repositories/notification_repository_impl.dart';
 import 'package:{{project_name}}/data/repositories/preferences_repository_impl.dart';
+import 'package:{{project_name}}/data/repositories/remote_config_repository_impl.dart';
 import 'package:{{project_name}}/data/repositories/secure_storage_repository_impl.dart';
 import 'package:{{project_name}}/data/repositories/storage_repository_impl.dart';
 import 'package:{{project_name}}/domain/repositories/auth_repository.dart';
 import 'package:{{project_name}}/domain/repositories/notification_repository.dart';
 import 'package:{{project_name}}/domain/repositories/preferences_repository.dart';
+import 'package:{{project_name}}/domain/repositories/remote_config_repository.dart';
 import 'package:{{project_name}}/domain/repositories/secure_storage_repository.dart';
 import 'package:{{project_name}}/domain/repositories/storage_repository.dart';
 import 'package:{{project_name}}/internal/analytics/providers/firebase.dart';
@@ -59,16 +62,16 @@ Future<void> configureDependencies() async {
     ),
   );
 
-  getIt.registerLazySingleton<ConnectivityService>(
-    () => ConnectivityService.instance,
-  );
+  getIt.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
 
   // Cubits
-  getIt.registerLazySingleton<AnalyticsLoggerCubit>(AnalyticsLoggerCubit);
+  getIt.registerLazySingleton<AnalyticsLoggerCubit>(
+    () => AnalyticsLoggerCubit(),
+  );
   getIt.registerLazySingleton<ThemeCubit>(
     () => ThemeCubit(preferencesRepository: getIt<PreferencesRepository>()),
   );
-  getIt.registerLazySingleton<LogCubit>(LogCubit);
+  getIt.registerLazySingleton<LogCubit>(() => LogCubit());
   getIt.registerLazySingleton<ConnectivityCubit>(
     () => ConnectivityCubit(connectivityService: getIt<ConnectivityService>()),
   );
@@ -79,9 +82,11 @@ Future<void> configureDependencies() async {
       sharedPreferences: getIt<SharedPreferences>(),
     ),
   );
-  getIt.registerLazySingleton<AuthRepository>(AuthRepositoryImplFirebase);
+  getIt.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImplFirebase(),
+  );
   getIt.registerLazySingleton<NotificationRepository>(
-    NotificationRepositoryImpl,
+    () => NotificationRepositoryImpl(),
   );
   getIt.registerLazySingleton<StorageRepository>(
     () => StorageRepositoryImpl(storage: getIt<FirebaseStorage>()),
