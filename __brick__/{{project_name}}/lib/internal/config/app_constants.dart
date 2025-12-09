@@ -15,4 +15,5 @@ class AppConstants {
   static const String getTokenByDeviceIdUrl =
       'https://api.example.com/get_token_by_device_id';
   static const String deeplinkScheme = 'app';
+  static const String baseUrl = 'https://api.example.com/en';
 }
