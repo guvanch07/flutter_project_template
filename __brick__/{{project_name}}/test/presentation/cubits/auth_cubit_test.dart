@@ -1,3 +1,4 @@
+// ignore_for_file: uri_does_not_exist, undefined_identifier
 import 'package:bloc_test/bloc_test.dart';
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;

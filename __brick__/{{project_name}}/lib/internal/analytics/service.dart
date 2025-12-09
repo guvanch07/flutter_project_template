@@ -10,7 +10,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
-import 'package:palestine_console/palestine_console.dart';
+import 'package:{{project_name}}/presentation/utils/print.dart';
 import 'package:universal_html/js.dart' as js;
 import 'package:{{project_name}}/injection.dart' as di;
 import 'package:{{project_name}}/internal/analytics/custom_firebase_analytics_observer.dart';

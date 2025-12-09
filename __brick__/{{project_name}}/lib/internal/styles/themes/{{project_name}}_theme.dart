@@ -5,7 +5,7 @@ import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/internal/styles/colors/{{project_name}}_palette.dart';
 
 // TODO: review all inputDecorationTheme
-class {{project_name|pascalCase}}Theme extends void CustomThemeData {
+class {{project_name|pascalCase}}Theme extends CustomThemeData {
   {{project_name|pascalCase}}Theme({required super.palette, required super.textTheme})
     : super(
         primaryLight: palette.primary.$40,
@@ -81,7 +81,6 @@ class {{project_name|pascalCase}}Theme extends void CustomThemeData {
       inverseSurface: palette.neutral.$20,
       onInverseSurface: palette.neutral.$95,
       inversePrimary: palette.primary.$80,
-      // surfaceTint: DefaultPalette,
     ),
     extensions: [
       CustomColors(
@@ -155,7 +154,6 @@ class {{project_name|pascalCase}}Theme extends void CustomThemeData {
       displayColor: onSurfaceLight,
       bodyColor: onSurfaceVariantLight,
     ),
-    // visualDensity: VisualDensity.adaptivePlatformDensity,
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
         TargetPlatform.android: ZoomPageTransitionsBuilder(),
@@ -202,13 +200,10 @@ class {{project_name|pascalCase}}Theme extends void CustomThemeData {
       onError: palette.error.$100,
       errorContainer: palette.error.$10,
       onErrorContainer: palette.error.$90,
-      // surface: const Color(0xff141218),
       surface: const Color(0xff27272B),
       onSurface: onSurfaceDark,
       surfaceDim: const Color(0xff111318),
       surfaceBright: const Color(0xff37393E),
-      // surfaceContainerLowest: const Color(0xff0C0E13),
-      // surfaceContainerLow: surfaceContainerLowDark,
       surfaceContainerLowest: const Color(0xff21242B),
       surfaceContainerLow: surfaceContainerLowDark,
       surfaceContainer: surfaceContainerDark,
@@ -222,7 +217,6 @@ class {{project_name|pascalCase}}Theme extends void CustomThemeData {
       inverseSurface: palette.neutral.$90,
       onInverseSurface: palette.neutral.$20,
       inversePrimary: palette.primary.$40,
-      // surfaceTint: DefaultPalette,
     ),
     extensions: [
       CustomColors(
@@ -296,7 +290,6 @@ class {{project_name|pascalCase}}Theme extends void CustomThemeData {
       displayColor: onSurfaceDark,
       bodyColor: onSurfaceVariantDark,
     ),
-    // visualDensity: VisualDensity.adaptivePlatformDensity,
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
         TargetPlatform.android: ZoomPageTransitionsBuilder(),

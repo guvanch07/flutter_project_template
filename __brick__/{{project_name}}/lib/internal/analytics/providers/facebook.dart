@@ -1,7 +1,7 @@
 // import 'package:facebook_app_events/facebook_app_events.dart';
 // import 'package:flutter/foundation.dart';
 // import 'package:get_it/get_it.dart';
-// import 'package:palestine_console/palestine_console.dart';
+// import 'package:{{project_name}}/presentation/utils/print.dart';
 
 // Future<void> initFacebookAnalytics({
 //   required GetIt locator,

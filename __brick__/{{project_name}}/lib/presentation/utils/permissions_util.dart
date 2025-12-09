@@ -2,7 +2,7 @@
 
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
-import 'package:palestine_console/palestine_console.dart';
+import 'package:{{project_name}}/presentation/utils/print.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/generated/translations.g.dart';
