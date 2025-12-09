@@ -28,12 +28,13 @@ class AuthRepositoryImplFirebase implements AuthRepository {
   static const String _getTokenByDeviceIdUrl =
       AppConstants.getTokenByDeviceIdUrl;
 
-  final FirebaseAuth _firebaseAuth;
-  final Dio _dio;
+  final FirebaseAuth firebaseAuth;
+  final Dio dio;
 
-  AuthRepositoryImplFirebase({FirebaseAuth? firebaseAuth, Dio? dio})
-    : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-      _dio = dio ?? getIt<Dio>();
+  const AuthRepositoryImplFirebase({
+    required this.firebaseAuth,
+    required this.dio,
+  });
 
   SecureStorageRepository get _secureStorage =>
       getIt<SecureStorageRepository>();
@@ -46,7 +47,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
       FirebaseFirestore.instance.collection('auth_device_ids');
 
   @override
-  bool get isSignedIn => _firebaseAuth.currentUser != null;
+  bool get isSignedIn => firebaseAuth.currentUser != null;
 
   @override
   Future<Either<BaseFailure, firebase_auth.User>> signIn({
@@ -54,7 +55,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
     required String password,
   }) async {
     try {
-      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(
+      final userCredential = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -79,7 +80,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
     required String password,
   }) async {
     try {
-      final currentUser = _firebaseAuth.currentUser;
+      final currentUser = firebaseAuth.currentUser;
 
       if (currentUser == null) {
         return const Left(
@@ -109,7 +110,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
   @override
   Future<Either<BaseFailure, void>> signOut() async {
     try {
-      await _firebaseAuth.signOut();
+      await firebaseAuth.signOut();
       return const Right(null);
     } catch (e) {
       return Left(RepositoryFailure(e.toString(), e));
@@ -121,12 +122,12 @@ class AuthRepositoryImplFirebase implements AuthRepository {
     try {
       firebase_auth.User? currentUser;
       try {
-        currentUser = await _firebaseAuth
+        currentUser = await firebaseAuth
             .authStateChanges()
             .firstWhere((u) => u != null)
             .timeout(const Duration(seconds: 2));
       } catch (_) {}
-      currentUser ??= _firebaseAuth.currentUser;
+      currentUser ??= firebaseAuth.currentUser;
 
       _log('uid: ${currentUser?.uid}');
 
@@ -186,7 +187,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
           _log(
             'restoring from custom token. firebaseAuthHash: $firebaseAuthHash',
           );
-          await _firebaseAuth.signInWithCustomToken(token);
+          await firebaseAuth.signInWithCustomToken(token);
         } else {
           String? installationToken;
 
@@ -200,14 +201,14 @@ class AuthRepositoryImplFirebase implements AuthRepository {
 
           if (installationToken != null) {
             _log('restoring from custom token via deviceId');
-            await _firebaseAuth.signInWithCustomToken(installationToken);
+            await firebaseAuth.signInWithCustomToken(installationToken);
           } else {
             _log('token not found. signing in anonymously');
-            await _firebaseAuth.signInAnonymously();
+            await firebaseAuth.signInAnonymously();
           }
         }
 
-        currentUser = _firebaseAuth.currentUser;
+        currentUser = firebaseAuth.currentUser;
         if (firebaseAuthHash == null && currentUser != null) {
           final hashedUid = currentUser.uid + const Uuid().v4();
           if (Platform.isIOS) {
@@ -338,7 +339,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
     if (!isExist) return null;
 
     try {
-      final response = await _dio.get(
+      final response = await dio.get(
         _getTokenByHashUrl,
         queryParameters: {'hash': firebaseAuthHash},
         options: Options(headers: {'Content-Type': 'application/json'}),
@@ -362,7 +363,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
     if (_getDataByHashUrl.contains('YOUR_')) return false;
 
     try {
-      final response = await _dio.get(
+      final response = await dio.get(
         _getDataByHashUrl,
         queryParameters: {'hash': firebaseAuthHash},
         options: Options(headers: {'Content-Type': 'application/json'}),
@@ -400,7 +401,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
     if (!isExist) return null;
 
     try {
-      final response = await _dio.get(
+      final response = await dio.get(
         _getTokenByDeviceIdUrl,
         queryParameters: {'deviceId': deviceId},
         options: Options(headers: {'Content-Type': 'application/json'}),
@@ -424,7 +425,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
     if (_getDataByDeviceIdUrl.contains('YOUR_')) return false;
 
     try {
-      final response = await _dio.get(
+      final response = await dio.get(
         _getDataByDeviceIdUrl,
         queryParameters: {'deviceId': deviceId},
         options: Options(headers: {'Content-Type': 'application/json'}),

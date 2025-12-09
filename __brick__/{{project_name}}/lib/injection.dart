@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -34,6 +35,7 @@ Future<void> configureDependencies() async {
   getIt
     ..registerSingleton<SharedPreferences>(sharedPreferences)
     ..registerLazySingleton<Dio>(NetworkModule.provideDio)
+    ..registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance)
     ..registerLazySingleton<FirebaseStorage>(() => FirebaseStorage.instance)
     ..registerLazySingleton<FlutterSecureStorage>(
       () => const FlutterSecureStorage(),
@@ -51,19 +53,30 @@ Future<void> configureDependencies() async {
         appsflyer: null,
       ),
     )
-    ..registerLazySingleton<ConnectivityService>(ConnectivityService)
+    ..registerLazySingleton<ConnectivityService>(ConnectivityService.new)
     ..registerLazySingleton<AnalyticsLoggerCubit>(
-      AnalyticsLoggerCubit,
+      AnalyticsLoggerCubit.new,
     ) // Keep AnalyticsLoggerCubit as it is used in AnalyticsService
-    ..registerLazySingleton<LogCubit>(LogCubit)
+    ..registerLazySingleton<LogCubit>(LogCubit.new)
+    ..registerLazySingleton<ConnectivityCubit>(
+      () =>
+          ConnectivityCubit(connectivityService: getIt<ConnectivityService>()),
+    )
     // Repositories
     ..registerLazySingleton<PreferencesRepository>(
       () => PreferencesRepositoryImpl(
         sharedPreferences: SharedPreferencesAsync(),
       ),
     )
-    ..registerLazySingleton<AuthRepository>(AuthRepositoryImplFirebase)
-    ..registerLazySingleton<NotificationRepository>(NotificationRepositoryImpl)
+    ..registerLazySingleton<AuthRepository>(
+      () => AuthRepositoryImplFirebase(
+        firebaseAuth: getIt<FirebaseAuth>(),
+        dio: getIt<Dio>(),
+      ),
+    )
+    ..registerLazySingleton<NotificationRepository>(
+      NotificationRepositoryImpl.new,
+    )
     ..registerLazySingleton<StorageRepository>(
       () => StorageRepositoryImpl(storage: getIt<FirebaseStorage>()),
     )
