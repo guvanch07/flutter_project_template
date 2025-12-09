@@ -43,22 +43,33 @@
   },
   "reviewModal": {
     "title": "Rate Our App",
-    "body": "We'd love to hear your feedback! Would you like to rate us on the App Store?",
-    "positiveButton": "Rate Now",
-    "negativeButton": "Not Now"
+    "message": "We'd love to hear your feedback! Would you like to rate us on the App Store?",
+    "sureText": "Rate Now",
+    "nextTimeText": "Not Now"
   },
   "exceptions": {
-    "networkError": "Network connection error",
-    "serverError": "Server error occurred",
-    "unknownError": "An unknown error occurred",
-    "timeoutError": "Request timed out",
-    "noInternetConnection": "No internet connection"
+    "connection": {
+      "title": "Network connection error",
+      "description": "Please check your internet connection and try again"
+    },
+    "server": {
+      "title": "Server error occurred",
+      "description": "Please try again later"
+    },
+    "unknown": {
+      "title": "An unknown error occurred",
+      "description": "Something went wrong"
+    },
+    "timeout": {
+      "title": "Request timed out",
+      "description": "Please try again"
+    }
   },
   "cameraPermissionModal": {
     "title": "Camera Permission Required",
-    "body": "This app needs camera access to take photos. Please grant permission in Settings.",
-    "positiveText": "Open Settings",
-    "negativeText": "Cancel"
+    "description": "This app needs camera access to take photos. Please grant permission in Settings.",
+    "primaryButton": "Open Settings",
+    "secondaryButton": "Cancel"
   },
   "home": {
     "title": "Home",

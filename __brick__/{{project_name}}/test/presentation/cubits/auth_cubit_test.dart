@@ -48,9 +48,7 @@ class MockAuthRepository implements AuthRepository {
     required String password,
   }) async => const Right('test_uid');
 
-  void setSignedIn(bool value) {
-    _isSignedIn = value;
-  }
+  set isSignedIn(bool value) => _isSignedIn = value;
 }
 
 void main() {
@@ -74,7 +72,7 @@ void main() {
     blocTest<AuthCubit, AuthState>(
       'emits [AuthAuthenticated] when checkAuthStatus is called and user is signed in',
       build: () {
-        mockAuthRepository.setSignedIn(true);
+        mockAuthRepository.isSignedIn = true;
         return authCubit;
       },
       act: (cubit) => cubit.checkAuthStatus(),
@@ -84,7 +82,7 @@ void main() {
     blocTest<AuthCubit, AuthState>(
       'emits [AuthUnauthenticated] when checkAuthStatus is called and user is not signed in',
       build: () {
-        mockAuthRepository.setSignedIn(false);
+        mockAuthRepository.isSignedIn = false;
         return authCubit;
       },
       act: (cubit) => cubit.checkAuthStatus(),

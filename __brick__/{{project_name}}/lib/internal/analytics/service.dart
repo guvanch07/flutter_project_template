@@ -10,12 +10,12 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
-import 'package:{{project_name}}/presentation/utils/print.dart';
 import 'package:universal_html/js.dart' as js;
 import 'package:{{project_name}}/injection.dart' as di;
 import 'package:{{project_name}}/internal/analytics/custom_firebase_analytics_observer.dart';
 import 'package:{{project_name}}/internal/config/config.dart';
 import 'package:{{project_name}}/presentation/blocs/blocs.dart';
+import 'package:{{project_name}}/presentation/utils/print.dart';
 
 part 'events.dart';
 
@@ -138,13 +138,11 @@ class AnalyticsServiceImpl extends AnalyticsService {
     AnalyticsCallOptions? callOptions,
   }) async {
     if (AppConstants.env == AppEnv.dev) {
-      unawaited(
-        _analyticsLoggerCubit.addItem(
-          AnalyticsLogItem.identify(
-            date: DateTime.now(),
-            uuid: uuid,
-            email: email,
-          ),
+      _analyticsLoggerCubit.addItem(
+        AnalyticsLogItem.identify(
+          date: DateTime.now(),
+          uuid: uuid,
+          email: email,
         ),
       );
     }

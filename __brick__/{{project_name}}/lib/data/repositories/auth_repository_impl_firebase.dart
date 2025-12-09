@@ -11,7 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart' hide User;
 import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import 'package:{{project_name}}/data/preferences_key.dart';
-import 'package:{{project_name}}/domain/domain.dart' as domain;
+import 'package:{{project_name}}/domain/domain.dart';
 import 'package:{{project_name}}/domain/utils/exception_util.dart';
 import 'package:{{project_name}}/injection.dart';
 import 'package:{{project_name}}/internal/internal.dart' hide AppBackupManager;
@@ -151,7 +151,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
             );
           } else {
             await _prefs.write(PreferencesKey.firebaseAuthHash, hashedUid);
-            unawaited(domain.AppBackupManager.dataChanged());
+            unawaited(AppBackupManager.dataChanged());
           }
           _log('creating firebaseAuthHash record for new firebase user');
           await _saveAuthHashToCollection(hashedUid, currentUser.uid);
