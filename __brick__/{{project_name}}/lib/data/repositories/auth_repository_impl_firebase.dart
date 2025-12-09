@@ -219,7 +219,7 @@ class AuthRepositoryImplFirebase implements AuthRepository {
             );
           } else {
             await _prefs.write(PreferencesKey.firebaseAuthHash, hashedUid);
-            unawaited(domain.AppBackupManager.dataChanged());
+            unawaited(AppBackupManager.dataChanged());
           }
           _log('creating firebaseAuthHash record for new firebase user');
           await _saveAuthHashToCollection(hashedUid, currentUser.uid);

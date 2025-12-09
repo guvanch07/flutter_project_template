@@ -56,7 +56,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
   /// call on initState func only if app doesn't have auth
   Future<void> _handleInitialDeepLink() async {
-    final uri = await AppLinks().getInitialLink();
+    final uri = await AppLinks().getInitialAppLink();
     if (uri != null) {
       DeeplinkHandler.fromUri(uri);
     }
@@ -112,29 +112,33 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         ),
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
-        builder: (context, themeMode) => MaterialApp.router(
-          title: '{{project_name.titleCase()}}',
-          builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(
-              context,
-            ).copyWith(textScaler: const TextScaler.linear(1)),
-            child: child!,
+        builder: (context, themeMode) => TranslationProvider(
+          child: Builder(
+            builder: (context) => MaterialApp.router(
+              title: '{{project_name.titleCase()}}',
+              builder: (context, child) => MediaQuery(
+                data: MediaQuery.of(
+                  context,
+                ).copyWith(textScaler: const TextScaler.linear(1)),
+                child: child!,
+              ),
+              routerConfig: router,
+              theme: ThemeData(
+                colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+                useMaterial3: true,
+              ),
+              darkTheme: ThemeData.dark(useMaterial3: true),
+              themeMode: themeMode,
+              locale: TranslationProvider.of(context).flutterLocale,
+              supportedLocales: AppLocaleUtils.supportedLocales,
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+                // RefreshLocalizations.delegate,
+              ],
+            ),
           ),
-          routerConfig: router,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            useMaterial3: true,
-          ),
-          darkTheme: ThemeData.dark(useMaterial3: true),
-          themeMode: themeMode,
-          locale: TranslationProvider.of(context).flutterLocale,
-          supportedLocales: AppLocaleUtils.supportedLocales,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            // RefreshLocalizations.delegate,
-          ],
         ),
       ),
     ),
