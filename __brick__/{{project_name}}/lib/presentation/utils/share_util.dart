@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_classes_with_only_static_members
 
+// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, unused_element
+
 import 'dart:async';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -7,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/injection.dart' as di;
 import 'package:{{project_name}}/internal/analytics/service.dart';
-import 'package:{{project_name}}/presentation/utils/utils.dart';
 import 'package:{{project_name}}/presentation/widgets/widgets.dart';
 
 class ShareUtil {

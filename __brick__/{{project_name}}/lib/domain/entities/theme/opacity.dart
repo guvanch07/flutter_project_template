@@ -1,3 +1,5 @@
+// ignore_for_file: uri_does_not_exist, undefined_class
+
 import 'package:flutter/widgets.dart';
 
 class CustomOpacity {
@@ -13,60 +15,56 @@ class CustomOpacity {
 
 extension ColorOpacityExtension on Color {
   /// 0.6
-  Color get opacitySecondary => withOpacity(CustomOpacity.secondary);
+  Color get opacitySecondary => withValues(alpha: CustomOpacity.secondary);
 
   /// 0.38
-  Color get opacityDisable => withOpacity(CustomOpacity.disable);
+  Color get opacityDisable => withValues(alpha: CustomOpacity.disable);
 
   /// 0.38
-  Color get opacityHint => withOpacity(CustomOpacity.hint);
+  Color get opacityHint => withValues(alpha: CustomOpacity.hint);
 
   /// 0.12
-  Color get opacityDividers => withOpacity(CustomOpacity.dividers);
+  Color get opacityDividers => withValues(alpha: CustomOpacity.dividers);
 
   /// 0.12
-  Color get opacity$12 => withOpacity(CustomOpacity.$12);
+  Color get opacity$12 => withValues(alpha: CustomOpacity.$12);
 
   /// 0.16
-  Color get opacity$16 => withOpacity(CustomOpacity.$16);
+  Color get opacity$16 => withValues(alpha: CustomOpacity.$16);
 
   /// 0.08
-  Color get opacity$8 => withOpacity(CustomOpacity.$8);
+  Color get opacity$8 => withValues(alpha: CustomOpacity.$8);
 }
 
 extension TextStyleOpacityExtension on TextStyle? {
   /// 0.6
   TextStyle? get opacitySecondary => this?.copyWith(
-        color: this?.color?.withOpacity(CustomOpacity.secondary),
-      );
+    color: this?.color?.withValues(alpha: CustomOpacity.secondary),
+  );
 
   /// 0.38
   TextStyle? get opacityDisable => this?.copyWith(
-        color: this?.color?.withOpacity(CustomOpacity.disable),
-      );
+    color: this?.color?.withValues(alpha: CustomOpacity.disable),
+  );
 
   /// 0.38
-  TextStyle? get opacityHint => this?.copyWith(
-        color: this?.color?.withOpacity(CustomOpacity.hint),
-      );
+  TextStyle? get opacityHint =>
+      this?.copyWith(color: this?.color?.withValues(alpha: CustomOpacity.hint));
 
   /// 0.12
   TextStyle? get opacityDividers => this?.copyWith(
-        color: this?.color?.withOpacity(CustomOpacity.dividers),
-      );
+    color: this?.color?.withValues(alpha: CustomOpacity.dividers),
+  );
 
   /// 0.12
-  TextStyle? get opacity$12 => this?.copyWith(
-        color: this?.color?.withOpacity(CustomOpacity.$12),
-      );
+  TextStyle? get opacity$12 =>
+      this?.copyWith(color: this?.color?.withValues(alpha: CustomOpacity.$12));
 
   /// 0.16
-  TextStyle? get opacity$16 => this?.copyWith(
-        color: this?.color?.withOpacity(CustomOpacity.$16),
-      );
+  TextStyle? get opacity$16 =>
+      this?.copyWith(color: this?.color?.withValues(alpha: CustomOpacity.$16));
 
   /// 0.08
-  TextStyle? get opacity$8 => this?.copyWith(
-        color: this?.color?.withOpacity(CustomOpacity.$8),
-      );
+  TextStyle? get opacity$8 =>
+      this?.copyWith(color: this?.color?.withValues(alpha: CustomOpacity.$8));
 }

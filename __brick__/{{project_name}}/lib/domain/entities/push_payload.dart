@@ -1,3 +1,5 @@
+// ignore_for_file: uri_does_not_exist, uri_has_not_been_generated, undefined_class, undefined_identifier, undefined_annotation_member, invalid_annotation_target, not_a_type, undefined_method
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'push_payload.freezed.dart';

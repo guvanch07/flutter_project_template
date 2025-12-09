@@ -1,3 +1,5 @@
+// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, undefined_annotation_member, invalid_annotation_target, uri_has_not_been_generated, unused_element
+
 import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';

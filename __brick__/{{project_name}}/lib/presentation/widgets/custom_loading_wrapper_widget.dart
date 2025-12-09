@@ -14,7 +14,7 @@ class CustomLoadingWrapperWidget {
     hide(); // hide existing if any
     _overlayEntry = OverlayEntry(
       builder: (context) => Container(
-        color: Colors.black.withOpacity(0.5),
+        color: Colors.black.withValues(alpha: 0.5),
         child: const Center(child: CircularProgressIndicator()),
       ),
     );

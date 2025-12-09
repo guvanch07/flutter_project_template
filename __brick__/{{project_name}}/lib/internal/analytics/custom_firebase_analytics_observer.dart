@@ -1,3 +1,5 @@
+// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, undefined_annotation_member, invalid_annotation_target, uri_has_not_been_generated, unused_element
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

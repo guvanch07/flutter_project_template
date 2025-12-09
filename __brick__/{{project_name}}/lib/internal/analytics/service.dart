@@ -1,3 +1,5 @@
+// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, undefined_annotation_member, invalid_annotation_target, uri_has_not_been_generated, unused_element
+
 import 'dart:async';
 
 import 'package:amplitude_flutter/amplitude.dart';
@@ -10,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:palestine_console/palestine_console.dart';
 import 'package:universal_html/js.dart' as js;
-import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/injection.dart' as di;
 import 'package:{{project_name}}/internal/analytics/custom_firebase_analytics_observer.dart';
 import 'package:{{project_name}}/internal/config/config.dart';

@@ -1,3 +1,5 @@
+// ignore_for_file: uri_does_not_exist, undefined_identifier
+
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';

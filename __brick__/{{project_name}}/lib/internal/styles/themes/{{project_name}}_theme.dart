@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_classes_with_only_static_members
+// ignore_for_file: avoid_classes_with_only_static_members, uri_does_not_exist, undefined_class, not_a_type
 
 import 'package:flutter/material.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
