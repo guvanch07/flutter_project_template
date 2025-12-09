@@ -45,6 +45,7 @@ dependencies:
   logger: ^2.5.0
   in_app_review: ^2.0.10
   uuid: ^4.4.0
+  flutter_inappwebview: ^6.0.0
   
   # Localization
   slang: ^3.28.0

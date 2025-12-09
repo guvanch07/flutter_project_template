@@ -52,18 +52,10 @@ Future<void> configureDependencies() async {
       ),
     )
     ..registerLazySingleton<ConnectivityService>(ConnectivityService)
-    // Cubits
     ..registerLazySingleton<AnalyticsLoggerCubit>(
       AnalyticsLoggerCubit,
     ) // Keep AnalyticsLoggerCubit as it is used in AnalyticsService
-    ..registerLazySingleton<ThemeCubit>(
-      () => ThemeCubit(preferencesRepository: getIt<PreferencesRepository>()),
-    )
     ..registerLazySingleton<LogCubit>(LogCubit)
-    ..registerLazySingleton<ConnectivityCubit>(
-      () =>
-          ConnectivityCubit(connectivityService: getIt<ConnectivityService>()),
-    )
     // Repositories
     ..registerLazySingleton<PreferencesRepository>(
       () => PreferencesRepositoryImpl(

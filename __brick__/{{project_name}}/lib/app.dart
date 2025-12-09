@@ -13,6 +13,7 @@ import 'package:{{project_name}}/i18n/strings.g.dart';
 import 'package:{{project_name}}/injection.dart';
 import 'package:{{project_name}}/presentation/cubits/cubits.dart';
 import 'package:{{project_name}}/presentation/route/route.dart';
+import 'package:{{project_name}}/presentation/utils/connectivity_service.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -93,6 +94,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       BlocProvider(
         create: (_) =>
             ThemeCubit(preferencesRepository: getIt<PreferencesRepository>()),
+      ),
+      BlocProvider(
+        create: (_) => ConnectivityCubit(
+          connectivityService: getIt<ConnectivityService>(),
+        ),
       ),
     ],
     child: MultiBlocListener(
