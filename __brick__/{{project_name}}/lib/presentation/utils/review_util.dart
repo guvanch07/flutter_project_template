@@ -5,12 +5,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:{{project_name}}/generated/translations.g.dart';
 import 'package:universal_io/io.dart';
+import 'package:{{project_name}}/generated/translations.g.dart';
 
 /// Utility class for managing native review request operations
 class ReviewUtil {
-  static const MethodChannel _channel = MethodChannel('{{project_name}}.app/review');
+  static const MethodChannel _channel = MethodChannel(
+    '{{project_name}}.app/review',
+  );
 
   /// Shows a review request dialog (Material modal on Android, native on iOS)
   /// Returns true if user tapped "Sure!" button, false if "Next Time", null on error

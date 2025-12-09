@@ -5,16 +5,16 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mason_demo/data/data.dart';
-import 'package:mason_demo/domain/entities/entities.dart';
-import 'package:mason_demo/domain/repositories/repositories.dart';
-import 'package:mason_demo/internal/analytics/analytics.dart';
-import 'package:mason_demo/internal/analytics/service.dart';
-import 'package:mason_demo/internal/config/config.dart';
-import 'package:mason_demo/presentation/blocs/blocs.dart';
-import 'package:mason_demo/presentation/cubits/cubits.dart';
-import 'package:mason_demo/presentation/utils/connectivity_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:{{project_name}}/data/data.dart';
+import 'package:{{project_name}}/domain/entities/entities.dart';
+import 'package:{{project_name}}/domain/repositories/repositories.dart';
+import 'package:{{project_name}}/internal/analytics/analytics.dart';
+import 'package:{{project_name}}/internal/analytics/service.dart';
+import 'package:{{project_name}}/internal/config/config.dart';
+import 'package:{{project_name}}/presentation/blocs/blocs.dart';
+import 'package:{{project_name}}/presentation/cubits/cubits.dart';
+import 'package:{{project_name}}/presentation/utils/connectivity_service.dart';
 
 final getIt = GetIt.instance;
 // Alias for backward compatibility with di.locator usage
