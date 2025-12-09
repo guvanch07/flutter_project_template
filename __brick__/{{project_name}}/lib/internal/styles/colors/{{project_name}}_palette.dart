@@ -5,8 +5,8 @@ import 'package:{{project_name}}/domain/entities/entities.dart';
 
 import 'base_palette.dart';
 
-class {{project_name|pascalCase}}Palette extends void BasePalette {
-  const {{project_name|pascalCase}}Palette();
+class {{project_name.pascalCase()}}Palette extends BasePalette {
+  const {{project_name.pascalCase()}}Palette();
 
   @override
   CustomColor get primary => const CustomColor({
