@@ -1,4 +1,4 @@
-// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, undefined_annotation_member, invalid_annotation_target, uri_has_not_been_generated, unused_element
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,17 +8,14 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(create: (_) => HomeCubit(), child: const HomeView());
-  }
+  Widget build(BuildContext context) => BlocProvider(create: (_) => HomeCubit(), child: const HomeView());
 }
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(title: const Text('Home')),
       body: Center(
         child: Column(
@@ -27,12 +24,10 @@ class HomeView extends StatelessWidget {
             const Text('Home Screen'),
             const SizedBox(height: 20),
             BlocBuilder<HomeCubit, int>(
-              builder: (context, state) {
-                return Text(
+              builder: (context, state) => Text(
                   'Counter: $state',
                   style: Theme.of(context).textTheme.headlineMedium,
-                );
-              },
+                ),
             ),
             const SizedBox(height: 20),
             FloatingActionButton(
@@ -43,5 +38,4 @@ class HomeView extends StatelessWidget {
         ),
       ),
     );
-  }
 }

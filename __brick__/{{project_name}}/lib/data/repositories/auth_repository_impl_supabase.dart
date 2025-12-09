@@ -1,5 +1,3 @@
-// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, undefined_annotation_member, invalid_annotation_target, uri_has_not_been_generated, unused_element
-
 import 'package:either_dart/either.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -7,15 +5,17 @@ import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImplSupabase implements AuthRepository {
-  final SupabaseClient _supabase = Supabase.instance.client;
+  final SupabaseClient supabase;
+
+  const AuthRepositoryImplSupabase({required this.supabase});
 
   @override
-  bool get isSignedIn => _supabase.auth.currentUser != null;
+  bool get isSignedIn => supabase.auth.currentUser != null;
 
   @override
   Future<Either<BaseFailure, void>> signOut() async {
     try {
-      await _supabase.auth.signOut();
+      await supabase.auth.signOut();
       return const Right(null);
     } catch (e) {
       return Left(RepositoryFailure(e.toString(), e));
@@ -33,11 +33,11 @@ class AuthRepositoryImplSupabase implements AuthRepository {
     // or a generic User type, rather than firebase_auth.User.
 
     try {
-      await _supabase.auth.signInWithPassword(email: email, password: password);
+      await supabase.auth.signInWithPassword(email: email, password: password);
 
       // We can't return a firebase_auth.User here.
       // This is a template design limitation where the interface is tied to Firebase.
-      return Left(
+      return const Left(
         RepositoryFailure(
           'Cannot return Firebase User from Supabase implementation. '
           'Update AuthRepository to use domain User entity.',
@@ -53,7 +53,7 @@ class AuthRepositoryImplSupabase implements AuthRepository {
   Future<Either<BaseFailure, firebase_auth.User>> getCurrentUser() async {
     // Note: Supabase uses its own User type, not Firebase's User
     // This implementation returns a failure since Supabase doesn't use Firebase Auth
-    return Left(
+    return const Left(
       RepositoryFailure(
         'getCurrentUser is not supported for Supabase implementation. '
         'Use Supabase.instance.client.auth.currentUser instead.',
@@ -70,13 +70,15 @@ class AuthRepositoryImplSupabase implements AuthRepository {
     try {
       // Supabase doesn't have anonymous accounts like Firebase
       // Instead, we can update the user's email/password
-      final response = await _supabase.auth.updateUser(
+      final response = await supabase.auth.updateUser(
         UserAttributes(email: email, password: password),
       );
       if (response.user != null) {
         return Right(response.user!.id);
       }
-      return Left(RepositoryFailure('Failed to link email to account', null));
+      return const Left(
+        RepositoryFailure('Failed to link email to account', null),
+      );
     } catch (e) {
       return Left(RepositoryFailure(e.toString(), e));
     }

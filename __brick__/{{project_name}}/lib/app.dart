@@ -1,15 +1,12 @@
-// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, undefined_annotation_member, invalid_annotation_target, uri_has_not_been_generated, unused_element
-
 import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:slang_flutter/slang_flutter.dart';
 import 'package:{{project_name}}/domain/repositories/repositories.dart';
 import 'package:{{project_name}}/domain/utils/utils.dart';
-import 'package:{{project_name}}/i18n/strings.g.dart';
+import 'package:{{project_name}}/generated/translations.g.dart';
 import 'package:{{project_name}}/injection.dart';
 import 'package:{{project_name}}/presentation/cubits/cubits.dart';
 import 'package:{{project_name}}/presentation/route/route.dart';
@@ -115,7 +112,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         builder: (context, themeMode) => TranslationProvider(
           child: Builder(
             builder: (context) => MaterialApp.router(
-              title: '{{project_name.titleCase()}}',
+              title: 'Demo Mason',
               builder: (context, child) => MediaQuery(
                 data: MediaQuery.of(
                   context,

@@ -1,14 +1,23 @@
-// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, undefined_annotation_member, invalid_annotation_target, uri_has_not_been_generated, unused_element
+import 'package:flutter/material.dart' show ThemeMode;
+import 'package:{{project_name}}/domain/entities/entities.dart';
+import 'package:{{project_name}}/generated/translations.g.dart';
 
-import 'package:flutter/material.dart';
-import 'package:{{project_name}}/domain/entities/data_source_key_entity.dart';
-
+// ignore: avoid_classes_with_only_static_members
 class PreferencesKey {
   static const themeMode = DataSourceKey<ThemeMode>(
     'theme_mode',
     defaultValue: ThemeMode.system,
     write: _themeModeToString,
     read: _stringToThemeMode,
+  );
+
+  static DataSourceKey<AppLocale> appLocale = DataSourceKey<AppLocale>(
+    'appLocale',
+    write: (value) => value.name,
+    read: (value) => AppLocale.values.firstWhere(
+      (locale) => locale.languageCode == value,
+      orElse: () => AppLocale.en,
+    ),
   );
 
   static const firebaseAuthHash = DataSourceKey<String>('firebase_auth_hash');

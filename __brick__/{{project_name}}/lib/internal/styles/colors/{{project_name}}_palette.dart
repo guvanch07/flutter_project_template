@@ -1,11 +1,11 @@
-// ignore_for_file: uri_does_not_exist, undefined_class, undefined_identifier, not_a_type, undefined_method, undefined_annotation_member, invalid_annotation_target, uri_has_not_been_generated, unused_element
+
 
 import 'package:flutter/material.dart';
 import 'package:{{project_name}}/domain/entities/entities.dart';
 
 import 'base_palette.dart';
 
-class {{project_name|pascalCase}}Palette extends BasePalette {
+class {{project_name|pascalCase}}Palette extends void BasePalette {
   const {{project_name|pascalCase}}Palette();
 
   @override
