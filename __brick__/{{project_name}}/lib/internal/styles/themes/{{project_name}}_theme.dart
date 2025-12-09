@@ -5,7 +5,7 @@ import 'package:{{project_name}}/domain/entities/entities.dart';
 import 'package:{{project_name}}/internal/styles/colors/{{project_name}}_palette.dart';
 
 // TODO: review all inputDecorationTheme
-class {{project_name|pascalCase}}Theme extends CustomThemeData {
+class {{project_name|pascalCase}}Theme extends void CustomThemeData {
   {{project_name|pascalCase}}Theme({required super.palette, required super.textTheme})
     : super(
         primaryLight: palette.primary.$40,
@@ -30,7 +30,7 @@ class {{project_name|pascalCase}}Theme extends CustomThemeData {
   ThemeData light(BuildContext context) => ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: surfaceContainerLight,
-    appBarTheme: Theme.of(context).appBarTheme.copyWith(
+    appBarTheme: const AppBarTheme().copyWith(
       surfaceTintColor: Colors.transparent,
       backgroundColor: surfaceContainerLight,
       titleTextStyle: textTheme.titleMedium?.copyWith(color: onSurfaceLight),
@@ -92,7 +92,7 @@ class {{project_name|pascalCase}}Theme extends CustomThemeData {
       ),
     ],
     fontFamily: textTheme.typeface.plain,
-    inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
+    inputDecorationTheme: const InputDecorationTheme().copyWith(
       labelStyle: WidgetStateTextStyle.resolveWith(
         (states) => states.contains(WidgetState.disabled)
             ? TextStyle(
@@ -168,7 +168,7 @@ class {{project_name|pascalCase}}Theme extends CustomThemeData {
   ThemeData dark(BuildContext context) => ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: surfaceContainerDark,
-    appBarTheme: Theme.of(context).appBarTheme.copyWith(
+    appBarTheme: const AppBarTheme().copyWith(
       surfaceTintColor: Colors.transparent,
       backgroundColor: surfaceContainerDark,
       titleTextStyle: textTheme.titleMedium?.copyWith(color: onSurfaceDark),
@@ -233,7 +233,7 @@ class {{project_name|pascalCase}}Theme extends CustomThemeData {
       ),
     ],
     fontFamily: textTheme.typeface.plain,
-    inputDecorationTheme: Theme.of(context).inputDecorationTheme.copyWith(
+    inputDecorationTheme: const InputDecorationTheme().copyWith(
       labelStyle: WidgetStateTextStyle.resolveWith(
         (states) => states.contains(WidgetState.disabled)
             ? TextStyle(

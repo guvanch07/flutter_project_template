@@ -65,7 +65,7 @@ Future<void> configureDependencies() async {
   // Repositories
   getIt.registerLazySingleton<PreferencesRepository>(
     () => PreferencesRepositoryImpl(
-      sharedPreferences: getIt<SharedPreferences>(),
+      sharedPreferences: SharedPreferencesAsync.instance,
     ),
   );
   getIt.registerLazySingleton<AuthRepository>(AuthRepositoryImplFirebase);
@@ -87,6 +87,7 @@ Future<void> configureDependencies() async {
     () =>
         RemoteConfigRepositoryImpl(remoteConfig: getIt<FirebaseRemoteConfig>()),
   );
+}
 
 void initUiData({required CommonUiData data}) {
   if (!getIt.isRegistered<CommonUiData>()) {

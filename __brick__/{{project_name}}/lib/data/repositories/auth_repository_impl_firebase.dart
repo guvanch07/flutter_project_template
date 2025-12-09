@@ -10,9 +10,11 @@ import 'package:flutter/foundation.dart';
 import 'package:uuid/uuid.dart';
 import 'package:{{project_name}}/data/preferences_key.dart';
 import 'package:{{project_name}}/domain/domain.dart' as domain;
+import 'package:{{project_name}}/domain/utils/exception_util.dart';
 import 'package:{{project_name}}/injection.dart';
 import 'package:{{project_name}}/internal/internal.dart' hide AppBackupManager;
 import 'package:{{project_name}}/presentation/cubits/cubits.dart';
+import 'package:{{project_name}}/presentation/utils/device_util.dart';
 
 class AuthRepositoryImplFirebase implements AuthRepository {
   // TODO: Add your backend URLs here

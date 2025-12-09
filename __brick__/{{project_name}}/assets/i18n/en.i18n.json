@@ -41,6 +41,25 @@
       }
     }
   },
+  "reviewModal": {
+    "title": "Rate Our App",
+    "body": "We'd love to hear your feedback! Would you like to rate us on the App Store?",
+    "positiveButton": "Rate Now",
+    "negativeButton": "Not Now"
+  },
+  "exceptions": {
+    "networkError": "Network connection error",
+    "serverError": "Server error occurred",
+    "unknownError": "An unknown error occurred",
+    "timeoutError": "Request timed out",
+    "noInternetConnection": "No internet connection"
+  },
+  "cameraPermissionModal": {
+    "title": "Camera Permission Required",
+    "body": "This app needs camera access to take photos. Please grant permission in Settings.",
+    "positiveText": "Open Settings",
+    "negativeText": "Cancel"
+  },
   "home": {
     "title": "Home",
     "counter": "Counter: {value}"

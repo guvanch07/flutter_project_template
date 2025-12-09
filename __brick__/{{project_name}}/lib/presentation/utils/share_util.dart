@@ -22,7 +22,7 @@ class ShareUtil {
     );
     try {
       CustomLoadingWrapperWidget.instance().show(context: context);
-      final imagePath = '${context.appDirPath}/${item.fileName}';
+      // final imagePath = '${context.appDirPath}/${item.fileName}';
       //TODO: Implement PDF generation
       // final pdfBytes = await PdfUtil.generatePdf(
       //   context: context,
